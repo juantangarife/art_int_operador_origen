@@ -1,0 +1,21 @@
+{% extends 'app_carpeta_digital/partials/base.html' %}
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center">Clientes</h1>
+                    <ul>
+                        {% for cliente in clientes %}
+                            <li>
+                                <a href="{% url 'app_carpeta_digital:cliente' id_cliente=cliente.id %}">
+                                    {{ cliente.cedula }} - {{ cliente }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

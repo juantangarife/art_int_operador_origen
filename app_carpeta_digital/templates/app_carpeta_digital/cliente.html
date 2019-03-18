@@ -1,0 +1,58 @@
+{% extends 'app_carpeta_digital/partials/base.html' %}
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center">{{ cliente }}</h1>
+                    <h2>Documentos</h2>
+                    <ul>
+                        {% for documento in documentos %}
+                            <li>
+                                <a href="{{ documento.archivo.url }}" target="_blank">
+                                    {{ documento.nombre }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                </div>
+                <div class="col-12 align-self-center">
+                    <h2 class="text-center mb-3">Transferir documento a otro operador</h2>
+                    <form method="post" action="{% url 'app_carpeta_digital:cliente' id_cliente=cliente.id %}">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label" for="selectArchivos">Archivo a transferir</label>
+                            <div class="col-10">
+                                <select class="form-control" id="selectArchivos" name="id_documento" required>
+                                    {% for documento in documentos %}
+                                        <option value="{{ documento.id }}">{{ documento.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label" for="selectOperadores">Operador destino</label>
+                            <div class="col-10">
+                                <select class="form-control" id="selectOperadores" name="id_operador" required>
+                                    {% for operador in operadores %}
+                                        <option value="{{ operador.id }}">{{ operador.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label" for="rutaDestino">Ingrese la ruta destino</label>
+                            <div class="col-10">
+                                <input class="form-control" id="rutaDestino" name="ruta" required>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
