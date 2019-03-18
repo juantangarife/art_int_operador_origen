@@ -1,0 +1,13 @@
+{% load tags_carpeta_digital %}
+<section>
+    <div class="container">
+        <nav class="nav nav-pills nav-justified">
+            <a class="nav-link {% if 'app_carpeta_digital:clientes'|is_url_active:request %}active{% endif %}" href="{% url 'app_carpeta_digital:clientes' %}">
+                Clientes
+            </a>
+            <a class="nav-link {% if 'app_carpeta_digital:crear-cliente'|is_url_active:request %}active{% endif %}" href="{% url 'app_carpeta_digital:crear-cliente' %}">
+                Crear ciente
+            </a>
+        </nav>
+    </div>
+</section>

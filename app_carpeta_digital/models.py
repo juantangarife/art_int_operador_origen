@@ -15,6 +15,7 @@ class OperadorDestino(models.Model):
 
 class Cliente(models.Model):
     cedula = models.CharField(max_length=100, unique=True, verbose_name='Cédula')
+    email = models.EmailField(unique=True, verbose_name='Correo electrónico')
     nombres = models.CharField(max_length=100, verbose_name='Nombres')
     apellidos = models.CharField(max_length=100, verbose_name='Apellidos')
 

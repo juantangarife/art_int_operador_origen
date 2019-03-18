@@ -1,9 +1,11 @@
 import os
 from shutil import copy2
 from django.contrib import messages
+from django.db.transaction import atomic
 from django.shortcuts import render, redirect
 from django.views import View
 
+from app_carpeta_digital.utils._soap_registraduria import validar_ciudadano
 from operador_origen.settings import CARPETA_BUS
 from .models import Cliente, OperadorDestino, Documento
 
@@ -15,7 +17,7 @@ class IndexView(View):
 
 class ClientesView(View):
     def get(self, request):
-        return render(request, 'app_carpeta_digital/index.html', {
+        return render(request, 'app_carpeta_digital/clientes.html', {
             'clientes': Cliente.objects.all()
         })
 
@@ -58,3 +60,35 @@ class ClienteView(View):
         else:
             messages.error(request, 'El cliente no existe')
         return self.get(request, id_cliente)
+
+
+class CrearClienteView(View):
+    def get(self, request):
+        return render(request, 'app_carpeta_digital/crear_cliente.html', {})
+
+    @atomic
+    def post(self, request):
+        cedula = request.POST.get('cedula', '')
+        nombres = request.POST.get('nombres', '')
+        apellidos = request.POST.get('apellidos', '')
+        email = request.POST.get('email', '')
+        if cedula and nombres and apellidos and email:
+            existe_cedula = Cliente.objects.filter(cedula=cedula).first()
+            if not existe_cedula:
+                existe_email = Cliente.objects.filter(email=email).first()
+                if not existe_email:
+                    validar_ciudadano(cedula=cedula)
+                    nuevo = Cliente(cedula=cedula, nombres=nombres, apellidos=apellidos)
+                    nuevo.save()
+                    messages.success(request, 'El cliente fue creado exitosamente')
+                else:
+                    messages.warning(request, 'Ya existe un cliente con el correo electrónico ingresado')
+                    return self.get(request)
+            else:
+                messages.warning(request, 'Ya existe un cliente con la cédula ingresada')
+                return self.get(request)
+
+            return redirect('app_carpeta_digital:clientes')
+        else:
+            messages.warning(request, 'Todos los campos son obligatorios')
+            return self.get(request)

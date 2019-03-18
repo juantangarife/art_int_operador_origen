@@ -1,0 +1,1 @@
+from ._soap_registraduria import validar_ciudadano

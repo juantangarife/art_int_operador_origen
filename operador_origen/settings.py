@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import urllib
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.contrib import messages
@@ -135,3 +136,4 @@ MESSAGE_TAGS = {
 
 CARPETA_BUS = os.path.join(BASE_DIR, 'tmp', 'carpeta_bus')
 
+REGISTRADURIA_WSDL_PATH = os.path.join('wsdls', 'registraduria', 'wsdl.xml')

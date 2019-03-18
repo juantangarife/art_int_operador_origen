@@ -12,7 +12,7 @@ class ClienteAdmin(admin.ModelAdmin):
     class DocumentoInline(admin.TabularInline):
         model = Documento
         extra = 0
-    list_display = ('id', 'cedula', 'nombres', 'apellidos')
+    list_display = ('id', 'cedula', 'nombres', 'apellidos', 'email')
     list_display_links = ('id', 'cedula')
     inlines = (DocumentoInline,)
 

@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<header>
+    {% include 'app_carpeta_digital/partials/navigation.html' %}
+</header>
+
 <main>
     {% if messages %}
         {% include 'app_carpeta_digital/partials/messages.html' with messages=messages %}
