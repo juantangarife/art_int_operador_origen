@@ -28,7 +28,8 @@ class Cliente(models.Model):
 
 
 def ruta_archivo_cliente(instance, filename):
-    return '/'.join([instance.fk_cliente.cedula, filename])
+    cedula = instance.fk_cliente.cedula
+    return '/'.join([cedula, f'{cedula}_{filename}'])
 
 
 class Documento(models.Model):
