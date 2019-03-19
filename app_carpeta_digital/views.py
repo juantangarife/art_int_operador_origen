@@ -39,13 +39,12 @@ class ClienteView(View):
         if cliente:
             id_documento = request.POST.get('id_documento', '')
             id_operador = request.POST.get('id_operador', '')
-            ruta = request.POST.get('ruta', '')
-            if id_documento and id_operador and ruta:
+            if id_documento and id_operador:
                 operador: OperadorDestino = OperadorDestino.objects.filter(id=id_operador).first()
                 documento: Documento = cliente.documento_set.filter(id=id_documento).first()
                 if operador and documento:
                     source = documento.archivo.path
-                    destination = os.path.join(CARPETA_BUS, operador.ruta_destino, ruta)
+                    destination = os.path.join(CARPETA_BUS)
                     try:
                         os.makedirs(destination)
                     except:

@@ -3,7 +3,6 @@ from django.db import models
 
 class OperadorDestino(models.Model):
     nombre = models.CharField(max_length=100, unique=True, verbose_name='Nombre')
-    ruta_destino = models.CharField(max_length=500, verbose_name='Ruta destino')
 
     def __str__(self):
         return self.nombre
