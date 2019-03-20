@@ -76,10 +76,18 @@ class CrearClienteView(View):
             if not existe_cedula:
                 existe_email = Cliente.objects.filter(email=email).first()
                 if not existe_email:
-                    validar_ciudadano(cedula=cedula)
-                    nuevo = Cliente(cedula=cedula, nombres=nombres, apellidos=apellidos)
-                    nuevo.save()
-                    messages.success(request, 'El cliente fue creado exitosamente')
+                    documento = validar_ciudadano(
+                        email=email,
+                        first_name=nombres,
+                        last_name=apellidos,
+                        id_number=cedula
+                    )
+                    if documento:
+                        nuevo = Cliente(email=email, cedula=cedula, nombres=nombres, apellidos=apellidos)
+                        nuevo.save()
+                        messages.success(request, 'El cliente fue creado exitosamente')
+                    else:
+                        messages.error(request, 'Los datos no se encuentran registrados en la Registraduría')
                 else:
                     messages.warning(request, 'Ya existe un cliente con el correo electrónico ingresado')
                     return self.get(request)
