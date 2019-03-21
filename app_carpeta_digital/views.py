@@ -5,7 +5,7 @@ from django.db.transaction import atomic
 from django.shortcuts import render, redirect
 from django.views import View
 
-from app_carpeta_digital.utils._soap_registraduria import validar_ciudadano
+from app_carpeta_digital.utils import validar_ciudadano
 from operador_origen.settings import CARPETA_BUS
 from .models import Cliente, OperadorDestino, Documento
 
